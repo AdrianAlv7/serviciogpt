@@ -1,0 +1,9 @@
+{% load static %}
+
+<div class="progreso_r">
+    <p>El progreso de tu egresado se encuentra en revision</p>
+    <form method="post" action="{% url 'logout' %}" class="dropdown-item">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-link p-0 text-start w-100">Logout</button>
+    </form>
+</div>

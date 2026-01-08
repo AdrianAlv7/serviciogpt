@@ -1,0 +1,73 @@
+{% load static %}
+
+<style>
+  .dropdown-toggle:focus {
+    outline: none;
+    box-shadow: none; /* 移除可能存在的阴影 */
+  }
+  /* 改进下拉菜单样式 */
+  .dropdown-menu {
+    margin-top: 0; /* 消除与触发器的间隙 */
+  }
+  
+  .dropdown-item form button {
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+  }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="//mexicali.tecnm.mx">Instituto Tecnológico de Mexicali</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/Todo/contacto.html">Contacto</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ egresado.nombre }} {{ egresado.primer_apellido }}
+                    </a>
+                    
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="{% url 'perfil' %}">User Profile</a></li>
+                        <li><a class="dropdown-item" href="{% url 'egresado' %}">Subir Documentos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="post" action="{% url 'logout' %}" class="dropdown-item">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link p-0 text-start w-100">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script>
+  document.querySelectorAll('.nav-item.dropdown').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      const dropdown = bootstrap.Dropdown.getOrCreateInstance(item.querySelector('.dropdown-toggle'));
+      dropdown.show();
+    });
+    
+    item.addEventListener('mouseleave', () => {
+      setTimeout(() => {
+        if (!item.matches(':hover')) {
+          const dropdown = bootstrap.Dropdown.getInstance(item.querySelector('.dropdown-toggle'));
+          dropdown?.hide();
+        }
+      }, 100);
+    });
+  });
+</script>

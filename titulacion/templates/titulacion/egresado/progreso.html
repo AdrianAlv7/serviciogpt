@@ -1,0 +1,26 @@
+{% load static %}
+ <div class="menu">
+            <ul class="nav flex-column">
+                <li class="menu-titulo ">
+                    <div class="menu-titulo ">
+                        <span class="progreso">Mi progreso</span>
+                    </div>
+                </li>
+                <li class="menu-item ">
+                    <div class="menu-box {% if etapa == 'revision_egresados' %}active{% endif %}">
+                        <p class="text">Revisión de Documentos</p>
+                    </div>
+                </li>
+                <li class="menu-item ">
+                    <div class="menu-box {% if etapa == 'lineas_pago_egresados' %}active{% endif %}">
+                        <p class="text">Revisión de Pago</p>
+                    </div>
+                </li>
+                <li class="menu-item">
+                    <div class="menu-box {% if etapa == 'cni_egresado' %}active{% endif %}">
+                        <p class="text">Constancia de No Incoveniencia</p>
+                    </div>
+                </li>
+            </ul>
+
+        </div>

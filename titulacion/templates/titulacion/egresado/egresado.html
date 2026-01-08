@@ -1,0 +1,43 @@
+{% extends 'titulacion/base.html' %}
+{% load static %}
+<!-- Titulo de la pagina -->
+{% block title %}Egresados{% endblock %}
+
+<!-- Links css y js -->
+{% block links %}
+{{ block.super }} <!-- Links en base.html -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'titulacion/css/subir_documento.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'titulacion/css/menu.css' %}"> -->
+{% endblock %}
+
+{% block navbar_block %}
+{% include "titulacion/partials/navbar_user.html" %}
+{% endblock %}
+
+<!-- Contenido principal de la pagina -->
+{% block content %}
+<div class="contenido">
+    {% if etapa == 'revision_egresados' %}
+    {% include 'titulacion/egresado/progreso.html' with etapa=etapa %}
+    {% include 'titulacion/egresado/etapa_revision.html' with docs=docs egresado=egresado%}
+
+
+    {% elif etapa == 'lineas_pago_egresados' %}
+    {% include 'titulacion/egresado/progreso.html' with etapa=etapa %}
+    {% include 'titulacion/egresado/etapa_lineas_pago.html' with docs=docs egresado=egresado%}
+
+    {% elif etapa == 'cni_egresado' %}
+    {% include 'titulacion/egresado/progreso.html' with etapa=etapa %}
+    {% include 'titulacion/egresado/etapa_cni.html' with docs=docs egresado=egresado%}
+
+    {% else %}
+    {% include 'titulacion/egresado/progreso_r.html' %}
+    {% endif %}
+
+</div>
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'titulacion/js/subir_documento.js' %}"></script>
+{% endblock %}

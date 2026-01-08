@@ -1,0 +1,46 @@
+/* 主容器设置为flex布局 */
+.contenido {
+  display: flex;
+  justify-content: space-between; 
+  align-items: flex-start; 
+  position: relative;
+  padding: 20px;
+}
+
+/* 左侧内容区 */
+.sugerencia {
+  width: 70%; 
+  margin-right: 20px; 
+}
+
+
+.next-btn {
+  position: sticky;
+  top: 20px; 
+  padding: 10px 20px;
+  background: #4285f4;
+  color: white;
+  border-radius: 4px;
+}
+
+.next-btn a{
+  color: white;
+}
+
+.sugerencia ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.sugerencia h2 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.sugerencia li span {
+  display: block;
+  margin-left: 20px;
+}

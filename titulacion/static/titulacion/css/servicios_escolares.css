@@ -1,0 +1,400 @@
+/* =========================================
+   ESTILOS GENERALES Y ESTRUCTURA (LAYOUT)
+   ========================================= */
+.se-container {
+    /* Mantenemos esto por si alguna otra vista lo usa, 
+       pero en servicios_escolares.html usaremos .main-wrapper */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.main-wrapper {
+    display: flex;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* =========================================
+   BARRA LATERAL (SIDEBAR IZQUIERDA)
+   ========================================= */
+.sidebar-menu {
+    flex: 0 0 280px; /* Ancho fijo */
+    position: sticky;
+    top: 20px; /* Se queda pegado al bajar */
+}
+
+.sidebar-card {
+    padding: 0;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background: white;
+    border-radius: 10px;
+}
+
+.sidebar-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    border-bottom: none;
+    margin-bottom: 0;
+    font-size: 1.1em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    text-decoration: none;
+    color: #555;
+    border-bottom: 1px solid #eee;
+    transition: all 0.3s;
+}
+
+.menu-link:hover {
+    background-color: #f8f9fa;
+    color: #2c3e50;
+    padding-left: 20px;
+}
+
+.menu-icon {
+    width: 30px;
+    text-align: center;
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+/* Colores específicos para iconos */
+.icon-excel { color: #28a745; }
+.icon-list { color: #3498db; }
+.icon-id { color: #e67e22; }
+.icon-check { color: #f1c40f; }
+.icon-tasks { color: #17a2b8; }
+.icon-pay { color: #6f42c1; }
+.icon-receipt { color: #20c997; }
+
+/* Botón de Logout en el menú */
+.menu-logout-container {
+    padding: 15px;
+}
+
+.btn-logout-menu {
+    width: 100%;
+    margin-top: 0;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.btn-logout-menu:hover {
+    background-color: #c0392b;
+}
+
+/* =========================================
+   ÁREA DE CONTENIDO (DERECHA)
+   ========================================= */
+.content-area {
+    flex: 1; /* Toma el resto del espacio */
+    min-width: 0; /* Evita que tablas largas rompan el flex */
+}
+
+/* Títulos de sección */
+.se-title {
+    text-align: center;
+    margin: 30px 0 20px;
+    padding: 15px;
+    background: #2c3e50;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    scroll-margin-top: 20px; /* Para el scroll automático */
+}
+
+/* El primer título no necesita margen superior extra */
+.se-title:first-of-type {
+    margin-top: 0;
+}
+
+/* Tarjetas de estudiantes/secciones */
+.student-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.student-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #eee;
+}
+
+.student-info {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.student-id {
+    background: #3498db;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 1rem;
+}
+
+/* =========================================
+   TARJETA DE CARGA MASIVA (ESTILOS ESPECÍFICOS)
+   ========================================= */
+.card-carga-masiva {
+    border-left: 5px solid #28a745;
+}
+
+.form-carga-container {
+    padding: 10px;
+}
+
+.form-carga {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group-excel {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-excel {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    flex-grow: 1;
+}
+
+.alert-warning-custom {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ffeeba;
+}
+
+.label-cursor {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* =========================================
+   TABLAS Y FORMULARIOS
+   ========================================= */
+.egresados-table, .documents-table {
+    width: 100%;
+    border-collapse: separate;
+    margin-top: 15px;
+}
+
+.egresados-table th, .documents-table th {
+    background: #f8f9fa;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.egresados-table td, .documents-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+}
+
+/* Anchos de columnas documentos */
+.document-name { width: 20%; font-weight: 500; color: #2c3e50; }
+.document-status { width: 15%; }
+.document-actions { width: 25%; }
+.document-notes { width: 40%; }
+
+/* Badges y Enlaces */
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.status-pending { background: #f8f9fa; color: #6c757d; }
+.status-delivered { background: #d4edda; color: #155724; }
+
+.archivo-link {
+    color: #3498db;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.archivo-link:hover { text-decoration: underline; }
+.archivo-link i { margin-right: 5px; }
+
+/* Botones Generales */
+.se-btn {
+    background: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.se-btn:hover { background: #219653; }
+
+.logout-btn {
+    /* Estilo legacy por si se usa fuera del menú */
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    margin: 40px auto;
+    transition: background 0.3s;
+}
+
+/* Inputs y Radios */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.radio-option, .checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.notes-label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+/* Estados vacíos */
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: #7f8c8d;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #bdc3c7;
+}
+
+/* =========================================
+   RESPONSIVIDAD (MÓVILES)
+   ========================================= */
+@media (max-width: 992px) {
+    .main-wrapper {
+        flex-direction: column; /* Pone el menú arriba del contenido en tablets */
+    }
+    
+    .sidebar-menu {
+        flex: 0 0 auto;
+        width: 100%;
+        position: relative;
+        top: 0;
+    }
+
+    .documents-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .documents-table th, 
+    .documents-table td {
+        white-space: nowrap;
+        min-width: 150px;
+    }
+    
+    .checkbox-group {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .student-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+    
+    .document-name {
+        min-width: 120px;
+    }
+    
+    .upload-btn {
+        align-self: stretch;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .input-group-excel {
+        flex-direction: column;
+    }
+    
+    .se-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

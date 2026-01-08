@@ -1,0 +1,46 @@
+.footer {
+    width: 100%;
+    height: 200px;
+    background-color: #1B396A;
+    padding: 20px;
+    margin-top: auto; /* 确保footer被推到最底部 */
+}
+
+/* #region contacto */
+.contacto {
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+    color: white;
+    border-bottom: 1px solid white;
+}
+.contacto .contacto-titulo {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.contacto .contacto-info {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 3px;
+}
+.contacto li:nth-last-child(1) {
+    margin-bottom: 20px;
+}
+/* #endregion contacto */
+
+/* #region link */
+.itm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    margin: 15px;
+}
+.itm a:hover {
+    color: #E87A2B;
+}
+/* #endregion link */

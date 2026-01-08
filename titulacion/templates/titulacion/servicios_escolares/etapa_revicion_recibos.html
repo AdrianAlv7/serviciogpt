@@ -1,0 +1,59 @@
+<h1>Etapa Revicion de Recibos</h1>
+<table>
+    {% for egresado, documentos in etapa_lineas_pago.items %}
+    <form method="post" action="{% url 'servicios_escolares' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="numero_control" value="{{ egresado.numero_control }}">
+
+        <tr>
+            <th colspan="4">
+                {{ egresado.numero_control }} - {{ egresado.nombre }} {{ egresado.primer_apellido }} {{ egresado.segundo_apellido|default_if_none:"" }}
+            </th>
+        </tr>
+
+        {% for clave, documento in documentos.items %}
+        {% if documento and documento.archivo %}
+        {% if documento.estado == 'pendiente' or documento.estado == 'revisado' %}
+        <tr>
+            <td>{{ clave }}</td>
+            <td>
+                <a href="{{ documento.archivo.url }}" target="_blank" class="archivo-link">Ver archivo</a>
+            </td>
+            <td>
+                <label><input type="radio" name="estado_{{ documento.pk }}" value="aceptado" required>Aceptar</label>
+                <label><input type="radio" name="estado_{{ documento.pk }}" value="rechazado" required>Rechazar</label>
+            </td>
+            <td>
+                <label><input type="checkbox" name="notas_{{ documento.pk }}" value="Documento mal escaneado">Documento
+                    mal escaneado</label>
+                <label><input type="checkbox" name="notas_{{ documento.pk }}" value="Archivo dañado">Archivo
+                    dañado</label>
+                <label><input type="checkbox" name="notas_{{ documento.pk }}"
+                        value="Documento dañado/manchado">Documento dañado/manchado</label>
+                <label><input type="checkbox" name="notas_{{ documento.pk }}" value="Documento incorrecto">Documento
+                    incorrecto</label>
+                <label><input type="checkbox" name="notas_{{ documento.pk }}" value="Documento incompleto">Documento
+                    incompleto</label>
+            </td>
+        </tr>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        
+        <tr>
+            <td>
+                Carta de No Inconveniencia
+            </td>
+            <td colspan="3">
+                <input type="file" id="archivo" name="subir_cni" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="4">
+                <button type="submit" class="se-btn">Procesaaaaaaaar Todos los Documentos</button>
+            </td>
+        </tr>
+    </form>
+    {% endfor %}
+</table>

@@ -1,0 +1,25 @@
+/* Header con nav-bar principal */
+.navbar {
+    background-color: #1B396A;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    
+}
+
+.nav-item {
+    padding: 0px 5px;
+}
+
+/* Subheader con titulo de pagina */
+.subheader {
+    padding-top: 20px;
+    padding-bottom: 5px;
+    background-color: #496899;
+    /*background-color: #1B646B;*/
+    
+    color: white;
+    text-align: center;
+}
+
+.subheader h1 {
+    margin-bottom: 0px;
+}

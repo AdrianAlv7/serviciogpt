@@ -1,0 +1,9 @@
+<form action="{% url 'generar_documento' %}" method="post" enctype="multipart/form-data">
+    <div class="form-flex-container">
+        {% csrf_token %}
+        <div class="documento">
+            <p class="titulo-documento">Carta de No Inconveniencia</p>
+        </div>
+        {% include 'titulacion/egresado/documento_descargar.html' with clave_documento='cni' docs=docs %}
+    </div>
+</form>

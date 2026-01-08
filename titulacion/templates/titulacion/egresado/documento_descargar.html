@@ -1,0 +1,40 @@
+<style>
+    .documento-container {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 18px;
+        margin: 18px 0;
+        background: #f9f9f9;
+        max-width: 400px;
+    }
+    .documento-container h2 {
+        margin-top: 0;
+        color: #2c3e50;
+        font-size: 1.3em;
+    }
+    .link {
+        color: #2980b9;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .link:hover {
+        text-decoration: underline;
+    }
+    input[type="file"] {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+</style>
+
+{% for doc_req, doc in docs.items %}
+    {% if doc_req.clave == clave_documento %}
+        <div class="documento-container">
+            <h2>{{ doc_req.titulo }}</h2>
+
+            {% if doc %}
+                    <a href="{{ doc.archivo.url }}" target="_blank" class="link">- {{ doc.archivo.name }}</a>
+            {% endif %}
+        </div>
+    {% endif %}
+{% endfor %}
+

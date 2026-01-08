@@ -1,0 +1,360 @@
+ .contenido {
+     display: flex;
+     flex-direction: column;
+     justify-content: normal;
+     padding: 20px;
+     padding-bottom: 85px;
+     gap: 30px;
+ }
+
+ /* 菜单区域样式 */
+ .menu {
+     width: 100%;
+     order: 0;
+ }
+
+ .menu-titulo .progreso {
+     font-weight: bold;
+     font-size: 16px;
+ }
+
+ .flex-column .menu-titulo {
+     border-bottom: 1px solid #E87A2B;
+ }
+
+ .flex-column .menu-item {
+     border-bottom: 1px solid #BEBEBE;
+ }
+
+ .flex-column .menu-item:last-child {
+     border-bottom: none;
+ }
+
+ .flex-column .menu-box {
+     height: 70px;
+     transition: all 0.5s ease;
+ }
+
+ .flex-column .menu-box p {
+     width: 100%;
+     height: 100%;
+     display: flex;
+     align-items: center;
+     color: #333;
+ }
+
+ .flex-column .menu-box .text {
+     font-size: 14px;
+     overflow: hidden;
+     text-overflow: ellipsis;
+ }
+
+ .flex-column .menu-box.active {
+     background-color: #D9D9D9;
+ }
+
+ .flex-column .menu-box.active .text {
+     font-weight: bold;
+     color: #333;
+ }
+
+ .form-flex-container {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+ }
+
+ /* 文档容器样式 */
+ .documento-container {
+     width: 100%;
+     margin: 20px 0;
+     padding: 20px;
+     background: white;
+     border-radius: 8px;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ }
+
+ .documento-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     width: 100%;
+     height: 70px;
+     padding: 20px;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+ }
+
+ .documento .titulo-documento {
+     color: black;
+     font-size: 16px;
+     font-weight: bold;
+ }
+
+ /* 自定义上传区域 */
+ .custom-upload-area {
+     width: 100%;
+     height: 100px;
+     border: 2px dashed #E87A2B;
+     border-radius: 8px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     background: rgba(232, 122, 43, 0.05);
+     padding: 15px;
+     position: relative;
+ }
+
+ .custom-upload-area.dragover {
+     background: rgba(46, 204, 113, 0.2);
+     border-color: #2ecc71;
+     transform: scale(1.02);
+ }
+
+ .custom-upload-area.has-file {
+     background: rgba(41, 128, 185, 0.2);
+     border-color: #2980b9;
+ }
+
+ /* 上传内容横向排列 */
+ .upload-content {
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 15px;
+ }
+
+ .upload-icon {
+     font-size: 2rem;
+     color: #E87A2B;
+     transition: all 0.3s ease;
+ }
+
+ .custom-upload-area.dragover .upload-icon {
+     color: #2ecc71;
+     transform: scale(1.1);
+ }
+
+ .upload-text-container {
+     display: flex;
+     flex-direction: column;
+     align-items: flex-start;
+ }
+
+ .upload-text {
+     font-size: 1rem;
+     color: #333;
+     text-align: left;
+     margin-bottom: 3px;
+ }
+
+ .upload-hint {
+     color: #666;
+     font-size: 0.9rem;
+ }
+
+ /* 文件信息 - 横向布局 */
+ .file-info {
+     display: none;
+     flex-direction: row;
+     align-items: center;
+     justify-content: space-between;
+     width: 100%;
+     height: 100%;
+     padding: 10px;
+     gap: 15px;
+ }
+
+ .file-icon {
+     font-size: 2rem;
+     color: #3498db;
+     flex-shrink: 0;
+ }
+
+ .file-details {
+     flex-grow: 1;
+     display: flex;
+     flex-direction: column;
+     align-items: flex-start;
+     overflow: hidden;
+ }
+
+ .file-name {
+     font-weight: 500;
+     color: #333;
+     font-size: 1rem;
+     max-width: 100%;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     margin-bottom: 5px;
+ }
+
+ .file-size {
+     color: #666;
+     font-size: 0.8rem;
+ }
+
+ .file-remove {
+     background: #e74c3c;
+     color: white;
+     border: none;
+     padding: 8px 15px;
+     border-radius: 6px;
+     font-size: 0.9rem;
+     font-weight: 600;
+     cursor: pointer;
+     transition: all 0.3s ease;
+     display: inline-flex;
+     align-items: center;
+     flex-shrink: 0;
+ }
+
+ .file-remove:hover {
+     background: #c0392b;
+     transform: translateY(-2px);
+     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+ }
+
+ .file-remove i {
+     margin-right: 5px;
+ }
+
+ /* 文件输入容器动画 */
+ .file-input-container {
+     max-height: 0;
+     overflow: hidden;
+     transition: max-height 0.3s ease, opacity 0.3s ease;
+     opacity: 0;
+ }
+
+ .file-input-container.show {
+     max-height: 150px;
+     opacity: 1;
+     margin-top: 15px;
+ }
+
+ /* 图标旋转动画 */
+ .container-abri .icon.rotated {
+     transform: rotate(180deg);
+ }
+
+ .container-abri .icon {
+     transition: transform 0.3s ease;
+     height: 30px;
+ }
+
+ .documento-header .container-abri {
+     cursor: pointer;
+ }
+
+ /* 已上传文件显示 */
+ .existing-file {
+     margin-bottom: 15px;
+ }
+
+ .existing-file a {
+     color: #E87A2B;
+     text-decoration: none;
+ }
+
+ .existing-file a:hover {
+     text-decoration: underline;
+ }
+
+ .rechazado-container {
+     background-color: rgba(192, 57, 43, 0.1);
+     padding: 15px;
+     border-radius: 8px;
+     margin-top: 10px;
+ }
+
+ .rechazado-container p {
+     color: #c0392b;
+     margin: 5px 0;
+ }
+
+ /* 按钮样式 */
+ .continuar-button {
+     display: flex;
+     margin: 20px auto;
+     width: 80%;
+     max-width: 300px;
+     min-height: 40px;
+     background: #E87A2B;
+     border-radius: 10px;
+     color: white;
+     justify-content: center;
+     align-items: center;
+     border: none;
+     cursor: pointer;
+ }
+
+ .continuar-button:disabled {
+     opacity: 0.6;
+     cursor: not-allowed;
+ }
+
+ /* 响应式设计 */
+ @media (min-width: 768px) {
+     .contenido {
+         flex-direction: row;
+         align-items: flex-start;
+         padding-left: 50px;
+         gap: 50px;
+     }
+
+     .menu {
+         flex: 0 0 250px;
+         order: 0;
+     }
+
+     .form-flex-container {
+         flex: 1;
+         min-width: 0;
+         order: 1;
+     }
+ }
+
+ @media (min-width: 992px) {
+     .contenido {
+         padding-left: 100px;
+         gap: 150px;
+     }
+
+     .menu {
+         flex: 0 0 300px;
+     }
+ }
+
+ @media (max-width: 576px) {
+     .continuar-button {
+         width: 90%;
+         padding: 8px 12px;
+     }
+
+     .upload-content {
+         flex-direction: column;
+         gap: 10px;
+         text-align: center;
+     }
+
+     .upload-text-container {
+         align-items: center;
+     }
+ }
+
+ form {
+     width: 50%;
+     display: flex;
+     flex-direction: column;
+     min-width: 0;
+     /* 关键！允许表单收缩 */
+ }
+
+ /* 确保文档容器能穿透表单约束 */
+ form>.documento {
+     flex: 1;
+     min-width: 0;
+ }

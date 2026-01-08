@@ -1,0 +1,29 @@
+<form method="post" action="{% url 'egresado' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-flex-container">
+        <div class="documento">
+            <p class="titulo-documento">Subir de Documentos</p>
+        </div>
+        <!-- DOCUMENTOS SIEMPRE VISIBLES (REQUISITOS BASE) -->
+        {% include 'titulacion/egresado/documento_subir.html' with clave_documento='beca' docs=docs %}
+        {% include 'titulacion/egresado/documento_subir.html' with clave_documento='impresion' docs=docs %}
+        {% include 'titulacion/egresado/documento_subir.html' with clave_documento='bachillerato' docs=docs %}
+        {% include 'titulacion/egresado/documento_subir.html' with clave_documento='curp' docs=docs %}
+        {% include 'titulacion/egresado/documento_subir.html' with clave_documento='acta' docs=docs %}
+        {% include 'titulacion/egresado/documento_subir.html' with clave_documento='e_firma' docs=docs %}
+
+        <!--REGLA: PLANES 1992 Y ANTERIORES  -->
+        {% if egresado.ano_de_egreso <= 1992 %} 
+            {% include 'titulacion/egresado/documento_subir.html' with clave_documento='practicas' docs=docs %} 
+        {% endif %} 
+        <!-- REGLA: 2009 EN ADELANTE (DOCUMENTOS VERDES Y ROJOS) --->
+        {% if egresado.ano_de_egreso >= 2009 %}
+            {% include 'titulacion/egresado/documento_subir.html' with clave_documento='ingles' docs=docs %}
+            {% include 'titulacion/egresado/documento_subir.html' with clave_documento='p_titulacion' docs=docs %}
+            {% include 'titulacion/egresado/documento_subir.html' with clave_documento='s_social' docs=docs %}
+            {% include 'titulacion/egresado/documento_subir.html' with clave_documento='licenciatura' docs=docs %}
+        {% endif %}
+
+            <button class="continuar-button">Enviar</button>
+    </div>
+</form>

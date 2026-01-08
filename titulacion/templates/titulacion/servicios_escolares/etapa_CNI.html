@@ -1,0 +1,30 @@
+ <h1>Etapa CNI</h1>
+    <table>
+        {% for egresado, documentos in etapa_cni.items %}
+        <form method="post" action="{% url 'servicios_escolares' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="numero_control" value="{{ egresado.numero_control }}">
+            
+            <tr>
+                <th colspan="4">
+                    {{ egresado.numero_control }} - {{ egresado.nombre }} {{ egresado.primer_apellido }} {{ egresado.segundo_apellido|default_if_none:"" }}
+                </th>
+            </tr>
+            
+            <tr>
+                <td>
+                    Carta de No Inconveniencia
+                </td>
+                <td colspan="3">
+                    <input type="file" id="archivo" name="subir_cni" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" required>
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="4">
+                    <button type="submit" class="se-btn">Procesar Todos los Documentos</button>
+                </td>
+            </tr>
+        </form>
+        {% endfor %}
+    </table>

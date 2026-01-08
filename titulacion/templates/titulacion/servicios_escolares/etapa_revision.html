@@ -1,0 +1,45 @@
+<h1>Etapa Revisión</h1>
+    <table>
+        {% for egresado, documentos in etapa_revision.items %}
+        <form method="post" action="{% url 'servicios_escolares' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="numero_control" value="{{ egresado.numero_control }}">
+            
+            <tr>
+                <th colspan="4">
+                    {{ egresado.numero_control }} - {{ egresado.nombre }} {{ egresado.primer_apellido }} {{ egresado.segundo_apellido|default_if_none:"" }}
+                </th>
+            </tr>
+            
+            {% for clave, documento in documentos.items %}
+                {% if documento and documento.archivo %}
+                        {% if documento.estado == 'pendiente' or documento.estado == 'rechazado' %}
+            <tr>
+                <td>{{ clave }}</td>
+                <td>
+                    <a href="{{ documento.archivo.url }}" target="_blank" class="archivo-link">Ver archivo</a>
+                </td>
+                <td>
+                    <label><input type="radio" name="estado_{{ documento.pk }}" value="revisado" required>Aceptar</label>
+                    <label><input type="radio" name="estado_{{ documento.pk }}" value="rechazado" required>Rechazar</label>
+                </td>
+                <td>
+                    <label><input type="checkbox" name="notas_{{ documento.pk }}" value="Documento mal escaneado">Documento mal escaneado</label>
+                    <label><input type="checkbox" name="notas_{{ documento.pk }}" value="Archivo dañado">Archivo dañado</label>
+                    <label><input type="checkbox" name="notas_{{ documento.pk }}" value="Documento dañado/manchado">Documento dañado/manchado</label>
+                    <label><input type="checkbox" name="notas_{{ documento.pk }}" value="Documento incorrecto">Documento incorrecto</label>
+                    <label><input type="checkbox" name="notas_{{ documento.pk }}" value="Documento incompleto">Documento incompleto</label>
+                </td>
+            </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            <tr>
+                <td colspan="4">
+                    <button type="submit" class="se-btn">Procesar Todos los Documentos</button>
+                </td>
+            </tr>
+        </form>
+        {% endfor %}
+    </table>

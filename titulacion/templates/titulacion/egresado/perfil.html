@@ -1,0 +1,43 @@
+{% extends "titulacion/base.html" %}
+{% load static %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block links %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'titulacion/css/perfil.css' %}">
+{% endblock %}
+
+{% block navbar_block %}
+{% include "titulacion/partials/navbar_user.html" %}
+{% endblock %}
+
+{% block content %}
+    <div class="main-content">
+        <div class="student-header">
+            <div class="student-info">{{ egresado.nombre }} {{ egresado.primer_apellido }} {{ egresado.segundo_apellido }} </div>
+            <div class="student-id">Número de control: {{ egresado.numero_control }}</div>
+        </div>
+
+        <h2 class="section-title">Información Personal</h2>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>Correo Electrónico</h3>
+                <p>{{ egresado.email|default:"correo@ejemplo.com" }}</p>
+            </div>
+            <div class="info-card">
+                <h3>Teléfono</h3>
+                <p>{{ egresado.telefono|default:"+52 123 456 7890" }}</p>
+            </div>
+            <div class="info-card">
+                <h3>Carrera</h3>
+                <p>Ingeniería en Sistemas Computacionales</p>
+            </div>
+            <div class="info-card">
+                <h3>Fecha de Egreso</h3>
+                <p>Junio 2020</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

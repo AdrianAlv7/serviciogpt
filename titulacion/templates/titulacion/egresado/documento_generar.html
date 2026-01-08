@@ -1,0 +1,25 @@
+<style>
+    .generar-btn {
+        background-color: #2980b9;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 18px;
+        font-size: 1em;
+        cursor: pointer;
+        margin: 10px 0;
+        transition: background 0.2s;
+    }
+    .generar-btn:hover {
+        background-color: #1c5d8c;
+    }
+</style>
+
+{% for doc_req, doc in docs.items %}
+    {% if doc_req.clave == clave_documento %}
+        <button type='submit' name='clave_documento' value='{{clave_documento}}' class="generar-btn">
+            Generar {{doc_req.titulo}}
+        </button>
+    {% endif %}
+{% endfor %}
+

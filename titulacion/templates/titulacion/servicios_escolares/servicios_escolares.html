@@ -1,0 +1,621 @@
+{% extends 'titulacion/base.html' %}
+{% load static %}
+
+{% block title %}Servicios Escolares{% endblock %}
+
+{% block links %}
+{{ block.super }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'titulacion/css/servicios_escolares.css' %}">
+{% endblock %}
+
+{% block navbar_block %}
+{% include "titulacion/partials/navbar.html" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="main-wrapper">
+
+    <aside class="sidebar-menu">
+        <div class="sidebar-card">
+            <div class="sidebar-header">
+                <i class="fas fa-bars"></i> Menú Rápido
+            </div>
+
+            <ul class="sidebar-list">
+                <li>
+                    <a href="#seccion-carga"
+                        onclick="document.getElementById('seccion-carga').scrollIntoView({behavior: 'smooth'});"
+                        class="menu-link">
+                        <i class="fas fa-file-excel menu-icon icon-excel"></i> Carga Masiva
+                    </a>
+                </li>
+                <li>
+                    <a href="#seccion-listado"
+                        onclick="document.getElementById('seccion-listado').scrollIntoView({behavior: 'smooth'});"
+                        class="menu-link">
+                        <i class="fas fa-users menu-icon icon-list"></i> Listado General
+                    </a>
+                </li>
+                <li>
+                    <a href="#seccion-identificacion"
+                        onclick="document.getElementById('seccion-identificacion').scrollIntoView({behavior: 'smooth'});"
+                        class="menu-link">
+                        <i class="fas fa-id-card menu-icon icon-id"></i> Identificación
+                    </a>
+                </li>
+                <li>
+                    <a href="#seccion-revision"
+                        onclick="document.getElementById('seccion-revision').scrollIntoView({behavior: 'smooth'});"
+                        class="menu-link">
+                        <i class="fas fa-clipboard-check menu-icon icon-check"></i> Revisión
+                    </a>
+                </li>
+                <li>
+                    <a href="#seccion-segunda-revision"
+                        onclick="document.getElementById('seccion-segunda-revision').scrollIntoView({behavior: 'smooth'});"
+                        class="menu-link">
+                        <i class="fas fa-tasks menu-icon icon-tasks"></i> 2da Revisión
+                    </a>
+                </li>
+                <li>
+                    <a href="#seccion-activar-pago"
+                        onclick="document.getElementById('seccion-activar-pago').scrollIntoView({behavior: 'smooth'});"
+                        class="menu-link">
+                        <i class="fas fa-toggle-on menu-icon icon-pay"></i> Activar Pago
+                    </a>
+                </li>
+                <li>
+                    <a href="#seccion-recibos"
+                        onclick="document.getElementById('seccion-recibos').scrollIntoView({behavior: 'smooth'});"
+                        class="menu-link">
+                        <i class="fas fa-receipt menu-icon icon-receipt"></i> Recibos
+                    </a>
+                </li>
+
+                <li class="menu-logout-container">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-logout-menu">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </aside>
+
+    <div class="content-area">
+
+        <h1 class="se-title">Gestión de Egresados</h1>
+
+        <div id="seccion-carga" class="student-card card-carga-masiva">
+            <div class="student-header">
+                <div class="student-info">
+                    <i class="fas fa-file-excel icon-excel"></i> Carga Masiva de Egresados
+                </div>
+            </div>
+
+            <div class="form-carga-container">
+                <p style="margin-bottom: 15px; color: #666;">
+                    Selecciona un archivo Excel (.xlsx).
+                    <br>
+                    <small>Columnas: <b>numero_control, curp, nombre, primer_apellido, segundo_apellido,
+                            genero</b></small>
+                </p>
+
+                <form method="post" action="{% url 'importar_egresados' %}" enctype="multipart/form-data"
+                    class="form-carga">
+                    {% csrf_token %}
+
+                    <div class="input-group-excel">
+                        <input type="file" name="archivo_excel" accept=".xlsx, .xls" required class="input-excel">
+                        <button type="submit" class="se-btn" style="background-color: #28a745;">
+                            <i class="fas fa-upload"></i> Subir Excel
+                        </button>
+                    </div>
+
+                    <div
+                        style="margin-top: 15px; padding: 10px; background-color: #e2e3e5; border-radius: 5px; color: #383d41; font-size: 0.9em;">
+                        <i class="fas fa-shield-alt"></i> <strong>Nota de Seguridad:</strong>
+                        <br>
+                        Si el número de control ya existe, se actualizarán los nombres pero
+                        <u>se conservará la CURP original</u> registrada en el sistema.
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <h1 class="se-title">Egresados</h1>
+        <div class="student-card">
+            <table class="egresados-table">
+                <thead>
+                    <tr>
+                        <th>Matricula</th>
+                        <th>Nombre</th>
+                        <th>Etapa Actual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for egresado in egresados %}
+                    <tr>
+                        <td>{{ egresado.numero_control }}</td>
+                        <td>{{ egresado.nombre }} {{ egresado.primer_apellido }}
+                            {{egresado.segundo_apellido|default_if_none:"" }}</td>
+                        <td>{{ egresado.etapa.nombre }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="empty-state">
+                            <i class="fas fa-user-graduate"></i>
+                            <h3>No hay egresados registrados</h3>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <h1 class="se-title">Etapa Identificación</h1>
+        {% for egresado, documentos in etapa_id.items %}
+        <div class="student-card">
+            <div class="student-header">
+                <div class="student-info">{{ egresado.nombre }} {{ egresado.primer_apellido }}
+                    {{egresado.segundo_apellido|default_if_none:"" }}</div>
+                <div class="student-id">Número de control: {{ egresado.numero_control }}</div>
+            </div>
+
+            <form method="post" action="{% url 'servicios_escolares' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="numero_control" value="{{ egresado.numero_control }}">
+
+                <table class="documents-table">
+                    <thead>
+                        <tr>
+                            <th class="document-name">Documento</th>
+                            <th class="document-status">Estado</th>
+                            <th class="document-actions">Acción</th>
+                            <th class="document-notes">Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for clave, documento in documentos.items %}
+                        <tr>
+                            <td class="document-name">{{ clave }}</td>
+                            <td class="document-status">
+                                {% if documento and documento.archivo %}
+                                <a href="{{ documento.archivo.url }}" target="_blank" class="archivo-link"><i
+                                        class="fas fa-file-pdf"></i> Ver archivo</a>
+                                {% else %}
+                                <span class="status-badge status-pending">No entregado</span>
+                                {% endif %}
+                            </td>
+                            <td class="document-actions">
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="estado_{{ documento.pk }}" value="aceptado"
+                                            onchange="toggleNotes('{{ documento.pk }}', true)" required>
+                                        Aceptar
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="estado_{{ documento.pk }}" value="rechazado"
+                                            onchange="toggleNotes('{{ documento.pk }}', false)" required>
+                                        Rechazar
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="document-notes">
+                                <span class="notes-label">Seleccione observaciones (si aplica):</span>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento mal escaneado"> Documento mal escaneado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}" value="Archivo dañado">
+                                        Archivo dañado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento dañado/manchado"> Documento dañado/manchado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento incorrecto">
+                                        Documento incorrecto
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento incompleto">
+                                        Documento incompleto
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <button type="submit" class="se-btn"><i class="fas fa-check-circle"></i>
+                                    Procesar Todos los Documentos
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        {% empty %}
+        <div class="student-card">
+            <div class="empty-state">
+                <i class="fas fa-folder-open"></i>
+                <h3>No hay egresados en la etapa de Identificación</h3>
+            </div>
+        </div>
+        {% endfor %}
+
+        <h1 class="se-title">Etapa Revisión</h1>
+        {% for egresado, documentos in etapa_revision.items %}
+        <div class="student-card">
+            <div class="student-header">
+                <div class="student-info">{{ egresado.nombre }} {{ egresado.primer_apellido }}
+                    {{egresado.segundo_apellido|default_if_none:"" }}</div>
+                <div class="student-id">Número de control: {{ egresado.numero_control }}</div>
+            </div>
+
+            <form method="post" action="{% url 'servicios_escolares' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="numero_control" value="{{ egresado.numero_control }}">
+
+                <table class="documents-table">
+                    <thead>
+                        <tr>
+                            <th class="document-name">Documento</th>
+                            <th class="document-status">Estado</th>
+                            <th class="document-actions">Acción</th>
+                            <th class="document-notes">Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for clave, documento in documentos.items %}
+                        {% if documento and documento.archivo %}
+                        {% if documento.estado == 'pendiente' or documento.estado == 'rechazado' %}
+                        <tr>
+                            <td class="document-name">{{ clave }}</td>
+                            <td class="document-status">
+                                <a href="{{ documento.archivo.url }}" target="_blank" class="archivo-link"><i
+                                        class="fas fa-file-pdf"></i> Ver archivo</a>
+                            </td>
+                            <td class="document-actions">
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="estado_{{ documento.pk }}" value="revisado"
+                                            onchange="toggleNotes('{{ documento.pk }}', true)" required>
+                                        Aceptar
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="estado_{{ documento.pk }}" value="rechazado"
+                                            onchange="toggleNotes('{{ documento.pk }}', false)" required>
+                                        Rechazar
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="document-notes">
+                                <span class="notes-label">Seleccione observaciones (si aplica):</span>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento mal escaneado"> 
+                                            Documento mal escaneado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}" value="Archivo dañado">
+                                        Archivo dañado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento dañado/manchado"> 
+                                            Documento dañado/manchado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento incorrecto">
+                                        Documento incorrecto
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento incompleto">
+                                        Documento incompleto
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <button type="submit" class="se-btn"><i class="fas fa-check-circle"></i> 
+                                    Procesar Todos los Documentos
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        {% empty %}
+        <div class="student-card">
+            <div class="empty-state">
+                <i class="fas fa-folder-open"></i>
+                <h3>No hay egresados en la etapa de Revisión</h3>
+            </div>
+        </div>
+        {% endfor %}
+
+        <h1 class="se-title">Etapa Segunda Revisión</h1>
+        {% for egresado, documentos in etapa_segunda_revision.items %}
+        <div class="student-card">
+            <div class="student-header">
+                <div class="student-info">{{ egresado.nombre }} {{ egresado.primer_apellido }}
+                    {{egresado.segundo_apellido|default_if_none:"" }}</div>
+                <div class="student-id">Número de control: {{ egresado.numero_control }}</div>
+            </div>
+
+            <form method="post" action="{% url 'servicios_escolares' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="numero_control" value="{{ egresado.numero_control }}">
+
+                <table class="documents-table">
+                    <thead>
+                        <tr>
+                            <th class="document-name">Documento</th>
+                            <th class="document-status">Estado</th>
+                            <th class="document-actions">Acción</th>
+                            <th class="document-notes">Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for clave, documento in documentos.items %}
+                        {% if documento and documento.archivo %}
+                        {% if documento.estado == 'pendiente' or documento.estado == 'revisado' %}
+                        <tr>
+                            <td class="document-name">{{ clave }}</td>
+                            <td class="document-status">
+                                <a href="{{ documento.archivo.url }}" target="_blank" class="archivo-link"><i
+                                        class="fas fa-file-pdf"></i> Ver archivo</a>
+                            </td>
+                            <td class="document-actions">
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="estado_{{ documento.pk }}" value="aceptado"
+                                            onchange="toggleNotes('{{ documento.pk }}', true)" required>
+                                        Aceptar
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="estado_{{ documento.pk }}" value="rechazado"
+                                            onchange="toggleNotes('{{ documento.pk }}', false)" required>
+                                        Rechazar
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="document-notes">
+                                <span class="notes-label">Seleccione observaciones (si aplica):</span>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento mal escaneado"> Documento mal escaneado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}" value="Archivo dañado">
+                                        Archivo dañado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento dañado/manchado"> Documento dañado/manchado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento incorrecto">
+                                        Documento incorrecto
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento incompleto">
+                                        Documento incompleto
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <button type="submit" class="se-btn"><i class="fas fa-check-circle"></i> Procesar Todos
+                                    los
+                                    Documentos</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        {% empty %}
+        <div class="student-card">
+            <div class="empty-state">
+                <i class="fas fa-folder-open"></i>
+                <h3>No hay egresados en la etapa de Segunda Revisión</h3>
+            </div>
+        </div>
+        {% endfor %}
+        <h1 id="seccion-activar-pago" class="se-title" style="scroll-margin-top: 20px;">Activar Línea de Pago</h1>
+        <div class="student-card">
+            {% if not etapa_activar_linea_pago %}
+            <div class="empty-state">
+                <i class="fas fa-check-circle"></i>
+                <h3>No hay egresados pendientes de activar pago</h3>
+            </div>
+            {% else %}
+            <form method="post" action="{% url 'servicios_escolares' %}" id="form-activar-pagos">
+                {% csrf_token %}
+                <input type="hidden" name="accion" value="activar_pago_masivo">
+                <table class="egresados-table">
+                    <thead>
+                        <tr>
+                            <th>Matrícula</th>
+                            <th>Nombre</th>
+                            <th>Plan</th>
+                            <th style="text-align: center;">
+                                <label><input type="checkbox" onclick="toggleAll(this)"> Todo</label>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for egresado, docs in etapa_activar_linea_pago.items %}
+                        <tr>
+                            <td>{{ egresado.numero_control }}</td>
+                            <td>{{ egresado.nombre }} {{ egresado.primer_apellido }}</td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" name="egresados_seleccionados"
+                                    value="{{ egresado.numero_control }}" class="egresado-checkbox">
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <div style="padding: 20px; text-align: right;">
+                    <button type="submit" class="se-btn" style="background-color: #6f42c1;">
+                        <i class="fas fa-toggle-on"></i> Activar Seleccionados
+                    </button>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+        <h1 class="se-title">Etapa Revisión de Recibos</h1>
+        {% for egresado, documentos in etapa_lineas_pago.items %}
+        <div class="student-card">
+            <div class="student-header">
+                <div class="student-info">{{ egresado.nombre }} {{ egresado.primer_apellido }}
+                    {{ egresado.segundo_apellido|default_if_none:"" }}</div>
+                <div class="student-id">Número de control: {{ egresado.numero_control }}</div>
+            </div>
+            <form method="post" action="{% url 'servicios_escolares' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="numero_control" value="{{ egresado.numero_control }}">
+                <table class="documents-table">
+                    <thead>
+                        <tr>
+                            <th class="document-name">Documento</th>
+                            <th class="document-status">Estado</th>
+                            <th class="document-actions">Acción</th>
+                            <th class="document-notes">Observaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for clave, documento in documentos.items %}
+                        {% if documento and documento.archivo %}
+                        {% if documento.estado == 'pendiente' or documento.estado == 'revisado' %}
+                        <tr>
+                            <td class="document-name">{{ clave }}</td>
+                            <td class="document-status">
+                                <a href="{{ documento.archivo.url }}" target="_blank" class="archivo-link"><i
+                                        class="fas fa-file-pdf"></i> Ver archivo</a>
+                            </td>
+                            <td class="document-actions">
+                                <div class="radio-group">
+                                    <label class="radio-option">
+                                        <input type="radio" name="estado_{{ documento.pk }}" value="aceptado"
+                                            onchange="toggleNotes('{{ documento.pk }}', true)" required>
+                                        Aceptar
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="estado_{{ documento.pk }}" value="rechazado"
+                                            onchange="toggleNotes('{{ documento.pk }}', false)" required>
+                                        Rechazar
+                                    </label>
+                                </div>
+                            </td>
+                            <td class="document-notes">
+                                <span class="notes-label">Seleccione observaciones (si aplica):</span>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento mal escaneado"> Documento mal escaneado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}" value="Archivo dañado">
+                                        Archivo dañado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento dañado/manchado"> Documento dañado/manchado
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento incorrecto">
+                                        Documento incorrecto
+                                    </label>
+                                    <label class="checkbox-option">
+                                        <input type="checkbox" name="notas_{{ documento.pk }}"
+                                            value="Documento incompleto">
+                                        Documento incompleto
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                        <tr>
+                            <td>
+                                Carta de No Inconveniencia
+                            </td>
+                            <td colspan="3">
+                                <input type="file" id="archivo" name="subir_cni"
+                                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="text-align: center;">
+                                <button type="submit" class="se-btn"><i class="fas fa-check-circle"></i> Procesar Todos
+                                    los Documentos</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        {% empty %}
+        <div class="student-card">
+            <div class="empty-state">
+                <i class="fas fa-folder-open"></i>
+                <h3>No hay egresados en la etapa de Revisión de Recibos</h3>
+            </div>
+        </div>
+        {% endfor %}
+        <form method="post" action="{% url 'logout' %}" style="text-align: center;">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+        </form>
+    </div>
+</div>
+</div>
+</div>
+<!-- <script>
+    function toggleAll(source) {
+        checkboxes = document.getElementsByClassName('egresado-checkbox');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script> -->
+
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'titulacion/js/servicios_escolares.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,242 @@
+/*#region video */
+.video {
+    width: 60%;
+    max-width: 700px;
+    aspect-ratio: 16/9;
+    background-color: orange;
+    min-height: 300px;
+}
+/*#endregion video */
+
+/* #region login */
+.login {
+    width: 30%;
+    min-width: 300px;
+    max-width: 700px;
+    min-height: 400px;
+    background-color: #496899;
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.login-items {
+    display: flex;
+    margin-bottom: 20px;
+}
+.login-items li{
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 1px solid #ccc;
+}   
+.login-items p{
+    width: 100%;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+.login-items li:first-child {
+    border-right:  1px solid #ccc;
+}
+
+/* 修改开始：仅调整这部分 */
+.forms-container {
+  position: relative;
+  min-height: 250px;
+  width: 100%;
+}
+.login-datos {
+  transition: opacity 0.3s ease, height 0.3s ease;
+}
+.login-datos {
+  width: 100%;
+  padding: 0 15px;
+  display: none; /* 默认隐藏 */
+  flex-direction: column;
+  justify-content: space-around;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.login-datos.active {
+  display: flex;
+  opacity: 1;
+  height: auto;
+  overflow: visible;
+}
+/* 修改结束 */
+
+.login-datos .datos{
+    padding: 5px 0px;
+}
+.login-datos label{
+    color: white;
+    font-size: 15px;
+    margin-bottom: 3px;
+}
+
+.login-datos input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.login-datos input:focus {
+    outline: none;
+    border-color: #E87A2B;
+    border-width: 2px;
+    padding: 7px;
+}
+/* #endregion login */
+
+/* #region boton */
+.boton{
+    border-bottom: 1px solid #ccc;
+}
+.login-boton {
+    width: 70%;
+    margin: 20px auto;
+}
+.login-boton a{
+    color: #fff;
+}
+.boton .egresado{
+    margin-top: 0px;
+}
+.login-boton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #E87A2B;
+    color:white;
+}
+/* #endregion boton */
+
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .contenido {
+        flex-direction: column;
+        padding: 20px;
+    }
+    .video, .login {
+        width: 100%;
+        max-width: 600px;
+    }
+    .video {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .login {
+        min-width: unset;
+        width: 95%;
+    }
+    .login-datos {
+        width: 95%;
+    }
+}
+
+/* #region identifica */
+.identificar{
+    margin-top: 25px;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+}
+.identificar a{
+    color: white;
+}
+.identificar a:hover{
+    color: #E87A2B;
+}
+
+.identificacion-form span{
+    color: white;
+    font-size: 15px;
+}
+
+.identificacion-form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+.identificacion-form input:focus {
+    outline: none;
+    border-color: #E87A2B;
+    border-width: 2px;
+    padding: 7px;
+}
+
+.datos {
+  margin-bottom: 15px;
+}
+
+.datos span {
+  display: block;
+  color: white;
+  font-size: 15px;
+}
+
+.datos input[type="file"] {
+  display: none;
+}
+
+.datos .file-hint {
+  display: block;
+  color: #ccc;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.datos .custom-upload-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background: #f8f9fa;
+  border: 1px dashed #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.datos .custom-upload-label:hover {
+  border-color: #E87A2B;
+  background-color: rgba(232, 122, 43, 0.1);
+}
+
+.datos .custom-upload-text {
+  color: #666;
+}
+
+.datos .custom-upload-btn {
+  padding: 6px 12px;
+  background: #E87A2B;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.volver-login p{
+    margin-top: 3px;
+}
+.volver-login p a{
+    font-size: 15px;
+    
+    color: white;
+}
+.volver-login p a:hover{
+    color: #E87A2B;
+}
+/* #endregion identifica */

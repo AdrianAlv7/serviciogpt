@@ -1,0 +1,14 @@
+<form method="post" action="{% url 'egresado' %}" enctype="multipart/form-data">
+    <div class="form-flex-container">
+        {% csrf_token %}
+        <h1>Descargar Lineas de pago en <a href="google.com">google.com</a></h1>
+        <div class="documento">
+            <p class="titulo-documento">Subir de comprobante de pago</p>
+        </div>
+        {% include 'titulacion/egresado/documento_subir.html' with clave_documento='linea_1' docs=docs %}
+
+        {% include 'titulacion/egresado/documento_subir.html' with clave_documento='linea_2' docs=docs %}
+
+        <button class="continuar-button">Enviar</button>
+    </div>
+</form>

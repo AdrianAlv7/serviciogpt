@@ -1,0 +1,114 @@
+{% extends 'titulacion/base.html' %}
+{% load static %}
+
+<!-- Titulo de la pagina -->
+{% block title %}Login{% endblock %}
+
+<!-- Links css y js -->
+{% block links %}
+{{ block.super }} <!-- Links en base.html -->
+<link rel="stylesheet" href="{% static 'titulacion/css/login.css' %}">
+{% endblock %}
+
+{% block navbar_block%}
+{% include "./partials/navbar.html" %}
+{% endblock%}
+<!-- Contenido principal de la pagina -->
+{% block content %}
+<div class="page">
+  <div class="contenido">
+    <div class="video"></div>
+    <div class="login">
+      <ul class="login-items">
+        <li class="active" data-form="student">
+          <p>Estudiante</p>
+        </li>
+        <li data-form="teacher">
+          <p>Personal</p>
+        </li>
+      </ul>
+
+      <!-- 表单容器 -->
+      <!-- 修改后的表单容器部分 -->
+      <div class="forms-container">
+        <!-- estudiante表单 -->
+        <form id="student-form" class="login-datos active" method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <input type="hidden" name="form_type" value="egresados">
+          <div class="datos">
+            <label for="egresado_correo">Correo electrónico</label>
+            <input type="email" id="egresado_correo" name="correo" required
+              placeholder="Correo personal o institucional">
+          </div>
+          <div class="datos">
+            <label for="curp">CURP</label>
+            <input type="text" id="curp" name="curp" maxlength="18" pattern="[A-Za-z0-9]{1,18}" required
+              placeholder="CURP">
+          </div>
+          <div class="boton">
+            <button type="submit" class="login-boton">Entrar</button>
+          </div>
+        </form>
+
+        <!-- maestro表单 -->
+        <form id="teacher-form" class="login-datos" method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <input type="hidden" name="form_type" value="servicios_escolares">
+          <div class="datos">
+            <label for="servicios_username">Usuario</label>
+            <input type="text" id="servicios_username" name="username" required>
+          </div>
+          <div class="datos">
+            <label for="servicios_password">Contraseña</label>
+            <input type="password" id="servicios_password" name="password" required>
+          </div>
+          <div class="boton">
+            <button type="submit" class="login-boton">Entrar</button>
+          </div>
+        </form>
+      </div>
+      <div class="identificar">
+        <p>¿No tienes acceso? <a href="#" id="toggle-identificar">¡Registrate!</a></p>
+      </div>
+
+      <!-- nuevo usuario -->
+      <div class="identificacion-form" style="display:none;">
+        <form class="login-datos active" method="post" action="{% url 'login' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" name="form_type" value="crear_egresado">
+          <div class="datos">
+            <span>Correro electrónico</span>
+            <input type="email" id="egresado_correo" name="correo" required
+              placeholder="Utilice su correo personal o institucional">
+          </div>
+          <div class="datos">
+            <label for="egresado_curp">Curp:</label>
+            <input type="text" id="egresado_curp" name="curp" maxlength="18" pattern="[A-Za-z0-9]{1,18}" required
+              placeholder="Verifica que su CURP esté correcto">
+          </div>
+          <div class="datos">
+            <span>Documento de identificación (PDF)</span>
+            <div class="file-upload-container">
+              <label class="custom-upload-label">
+                <span class="custom-upload-text">Seleccionar archivo</span>
+                <span class="custom-upload-btn">Examinar</span>
+                <input type="file" id="identificacion-upload" accept=".pdf" required class="file-input"
+                  name="id">
+              </label>
+            </div>
+          </div>
+          <div class="boton">
+            <button type="submit" class="login-boton egresado">Enviar solicitud</button>
+          </div>
+          <div class="volver-login ">
+            <p><a href="#" id="volver-login">← Volver al login</a></p>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'titulacion/js/login.js' %}"></script>
+{% endblock %}
